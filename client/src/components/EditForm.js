@@ -1,4 +1,22 @@
-const EditForm = ({ id, title, quantity, price }) => {
+import { useState } from "react";
+
+const EditForm = ({ id, title, quantity, price, handleUpdate }) => {
+  const [newTitle, setNewTitle] = useState(title);
+  const [newPrice, setNewPrice] = useState(price);
+  const [newQuantity, setNewQuantity] = useState(quantity);
+
+  const handleTitleChange = (e) => {
+    setNewTitle(e.target.value);
+  };
+
+  const handlePriceChange = (e) => {
+    setNewPrice(e.target.value);
+  };
+
+  const handleQuantityChange = (e) => {
+    setNewQuantity(e.target.value);
+  };
+
   return (
     <div className="edit-form">
       <h3>Edit Product</h3>
@@ -6,24 +24,42 @@ const EditForm = ({ id, title, quantity, price }) => {
         <div className="input-group">
           <label for="product-name">Product Name</label>
           <input
+            onChange={handleTitleChange}
             type="text"
             id="product-name"
-            value="Apple 10.5-Inch iPad Pro"
+            value={newTitle}
           />
         </div>
 
         <div className="input-group">
           <label for="product-price">Price</label>
-          <input type="text" id="product-price" value="649.99" />
+          <input
+            onChange={handlePriceChange}
+            type="text"
+            id="product-price"
+            value={newPrice}
+          />
         </div>
 
         <div className="input-group">
           <label for="product-quantity">Quantity</label>
-          <input type="text" id="product-quantity" value="2" />
+          <input
+            onChange={handleQuantityChange}
+            type="text"
+            id="product-quantity"
+            value={newQuantity}
+          />
         </div>
 
         <div className="actions form-actions">
-          <a className="button">Update</a>
+          <a
+            className="button"
+            onClick={(e) =>
+              handleUpdate(e, id, newTitle, newPrice, newQuantity)
+            }
+          >
+            Update
+          </a>
           <a className="button">Cancel</a>
         </div>
       </form>

@@ -1,7 +1,6 @@
 import EditForm from "./EditForm";
 
-const Product = ({ id, title, quantity, price }) => {
-  console.log(id, title, quantity, price);
+const Product = ({ id, title, quantity, price, handleUpdate }) => {
   return (
     <div className="product" key={id}>
       <div className="product-details">
@@ -12,7 +11,13 @@ const Product = ({ id, title, quantity, price }) => {
           <a className="button add-to-cart">Add to Cart</a>
           <a className="button edit">Edit</a>
         </div>
-        <EditForm />
+        <EditForm
+          id={id}
+          title={title}
+          price={price}
+          quantity={quantity}
+          handleUpdate={handleUpdate}
+        />
         <a className="delete-button">
           <span>X</span>
         </a>
@@ -20,10 +25,5 @@ const Product = ({ id, title, quantity, price }) => {
     </div>
   );
 };
-
-// id: 1,
-// title: "Amazon Kindle E-reader",
-// quantity: 5,
-// price: 79.99
 
 export default Product;
