@@ -41,6 +41,20 @@ const App = () => {
     }
   };
 
+  const handleNewProduct = async (e, title, price, quantity) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(`/api/products`, {
+        title,
+        price,
+        quantity,
+      });
+      setProducts(products.concat(response.data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div id="app">
       <Header />
@@ -48,7 +62,7 @@ const App = () => {
       <main>
         <Products products={products} handleUpdate={handleUpdate} />
         <a className="button add-product-button">Add A Product</a>
-        <AddForm />
+        <AddForm handleNewProduct={handleNewProduct} />
       </main>
     </div>
   );
