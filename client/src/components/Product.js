@@ -28,7 +28,9 @@ const Product = ({
           >
             Add to Cart
           </a>
-          <a className="button edit">Edit</a>
+          <a href="/#" className="button edit">
+            Edit
+          </a>
         </div>
         <EditForm
           id={id}
