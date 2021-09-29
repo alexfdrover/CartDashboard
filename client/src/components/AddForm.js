@@ -25,6 +25,11 @@ const AddForm = ({ onNewProduct }) => {
     setAddFormVisible(!addFormVisible);
   };
 
+  const onFormVisible = (e) => {
+    e.preventDefault();
+    setAddFormVisible(!addFormVisible);
+  };
+
   return addFormVisible ? (
     <div className="add-form visible">
       <h3>Add Product</h3>
@@ -69,11 +74,7 @@ const AddForm = ({ onNewProduct }) => {
           >
             Add
           </a>
-          <a
-            href="/#"
-            className="button"
-            onClick={() => setAddFormVisible(!addFormVisible)}
-          >
+          <a href="/#" className="button" onClick={(e) => onFormVisible(e)}>
             Cancel
           </a>
         </div>
@@ -84,7 +85,7 @@ const AddForm = ({ onNewProduct }) => {
       <a
         href="/#"
         className="button add-product-button"
-        onClick={() => setAddFormVisible(!addFormVisible)}
+        onClick={(e) => onFormVisible(e)}
       >
         Add A Product
       </a>
