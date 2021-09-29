@@ -1,9 +1,10 @@
 import { useState } from "react";
 
-const AddForm = ({ handleNewProduct }) => {
+const AddForm = ({ onNewProduct }) => {
   const [newTitle, setNewTitle] = useState("");
   const [newPrice, setNewPrice] = useState("");
   const [newQuantity, setNewQuantity] = useState("");
+  const [addFormVisible, setAddFormVisible] = useState(false);
 
   const handleTitleChange = (e) => {
     setNewTitle(e.target.value);
@@ -17,11 +18,8 @@ const AddForm = ({ handleNewProduct }) => {
     setNewQuantity(e.target.value);
   };
 
-  return (
+  return addFormVisible ? (
     <div className="add-form visible">
-      <p>
-        <a className="button add-product-button">Add A Product</a>
-      </p>
       <h3>Add Product</h3>
       <form>
         <div className="input-group">
@@ -56,17 +54,32 @@ const AddForm = ({ handleNewProduct }) => {
 
         <div className="actions form-actions">
           <a
+            href="/#"
             className="button"
-            onClick={(e) =>
-              handleNewProduct(e, newTitle, newPrice, newQuantity)
-            }
+            onClick={(e) => onNewProduct(e, newTitle, newPrice, newQuantity)}
           >
             Add
           </a>
-          <a className="button">Cancel</a>
+          <a
+            href="/#"
+            className="button"
+            onClick={() => setAddFormVisible(!addFormVisible)}
+          >
+            Cancel
+          </a>
         </div>
       </form>
     </div>
+  ) : (
+    <p>
+      <a
+        href="/#"
+        className="button add-product-button"
+        onClick={() => setAddFormVisible(!addFormVisible)}
+      >
+        Add A Product
+      </a>
+    </p>
   );
 };
 

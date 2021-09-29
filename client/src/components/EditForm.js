@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const EditForm = ({ id, title, quantity, price, handleUpdate }) => {
+const EditForm = ({ id, title, quantity, price, onUpdateProduct }) => {
   const [newTitle, setNewTitle] = useState(title);
   const [newPrice, setNewPrice] = useState(price);
   const [newQuantity, setNewQuantity] = useState(quantity);
@@ -53,14 +53,17 @@ const EditForm = ({ id, title, quantity, price, handleUpdate }) => {
 
         <div className="actions form-actions">
           <a
+            href="/#"
             className="button"
             onClick={(e) =>
-              handleUpdate(e, id, newTitle, newPrice, newQuantity)
+              onUpdateProduct(e, id, newTitle, newPrice, newQuantity)
             }
           >
             Update
           </a>
-          <a className="button">Cancel</a>
+          <a href="/#" className="button">
+            Cancel
+          </a>
         </div>
       </form>
     </div>

@@ -5,8 +5,8 @@ const Product = ({
   title,
   quantity,
   price,
-  handleUpdate,
-  handleDelete,
+  onUpdateProduct,
+  onDeleteProduct,
   onCartAdd,
   checkItemAvailable,
 }) => {
@@ -18,7 +18,7 @@ const Product = ({
         <p className="quantity">{quantity} left in stock</p>
         <div className="actions product-actions">
           <a
-            // className="button add-to-cart disabled"
+            href="/#"
             className={
               checkItemAvailable(id)
                 ? "button add-to-cart"
@@ -35,9 +35,13 @@ const Product = ({
           title={title}
           price={price}
           quantity={quantity}
-          handleUpdate={handleUpdate}
+          onUpdateProduct={onUpdateProduct}
         />
-        <a className="delete-button" onClick={(e) => handleDelete(e, id)}>
+        <a
+          href="/#"
+          className="delete-button"
+          onClick={(e) => onDeleteProduct(e, id)}
+        >
           <span>X</span>
         </a>
       </div>

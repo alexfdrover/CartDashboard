@@ -1,4 +1,4 @@
-const Cart = ({ cartItems }) => {
+const Cart = ({ cartItems, onCheckout }) => {
   const totalCost = () => {
     let total = 0;
     cartItems.forEach((item) => {
@@ -34,7 +34,9 @@ const Cart = ({ cartItems }) => {
           </tr>
         </tbody>
       </table>
-      <a className="button checkout">Checkout</a>
+      <a href="/#" className="button checkout" onClick={onCheckout}>
+        Checkout
+      </a>
     </div>
   );
 };

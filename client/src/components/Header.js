@@ -1,12 +1,12 @@
 import Cart from "./Cart";
 
-const Header = ({ cartItems }) => {
+const Header = ({ cartItems, onCheckout }) => {
   return (
     <header>
       <h1>The Shop!</h1>
       <div className="cart">
         {cartItems.length !== 0 ? (
-          <Cart cartItems={cartItems} />
+          <Cart cartItems={cartItems} onCheckout={onCheckout} />
         ) : (
           <div>
             <p>Your cart is empty</p>

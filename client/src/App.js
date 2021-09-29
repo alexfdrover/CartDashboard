@@ -27,7 +27,7 @@ const App = () => {
     fetchData();
   }, []);
 
-  const handleUpdate = async (e, id, title, price, quantity) => {
+  const onUpdateProduct = async (e, id, title, price, quantity) => {
     e.preventDefault();
     try {
       const response = await axios.put(`/api/products/${id}`, {
@@ -50,7 +50,7 @@ const App = () => {
     }
   };
 
-  const handleNewProduct = async (e, title, price, quantity) => {
+  const onNewProduct = async (e, title, price, quantity) => {
     e.preventDefault();
     try {
       const response = await axios.post(`/api/products`, {
@@ -64,10 +64,10 @@ const App = () => {
     }
   };
 
-  const handleDelete = async (e, productId) => {
+  const onDeleteProduct = async (e, productId) => {
     e.preventDefault();
     try {
-      const response = await axios.delete(`/api/products/${productId}`);
+      await axios.delete(`/api/products/${productId}`);
       setProducts(
         products.filter((product) => {
           if (product._id !== productId) {
@@ -105,6 +105,21 @@ const App = () => {
           })
         );
       }
+
+      const product = products.find((product) => product._id === id);
+      const response2 = await axios.put(`/api/products/${id}`, {
+        quantity: product.quantity - 1,
+      });
+      const updatedProduct = response2.data;
+      setProducts(
+        products.map((product) => {
+          if (product._id !== updatedProduct._id) {
+            return product;
+          } else {
+            return updatedProduct;
+          }
+        })
+      );
     } catch (err) {
       console.log(err);
     }
@@ -112,26 +127,32 @@ const App = () => {
 
   const checkItemAvailable = (id) => {
     const productQuantity = products.find((item) => item._id === id).quantity;
-    const cartItem = cartItems.find((item) => item.productId === id);
-    const cartQuantity = cartItem ? cartItem.quantity : 0;
 
-    return productQuantity > cartQuantity;
+    return productQuantity > 0;
+  };
+
+  const onCheckout = async () => {
+    try {
+      await axios.post("/api/cart/checkout");
+      setCartItems([]);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
     <div id="app">
-      <Header cartItems={cartItems} />
+      <Header cartItems={cartItems} onCheckout={onCheckout} />
 
       <main>
         <Products
           products={products}
-          handleUpdate={handleUpdate}
-          handleDelete={handleDelete}
+          onUpdateProduct={onUpdateProduct}
+          onDeleteProduct={onDeleteProduct}
           onCartAdd={onCartAdd}
           checkItemAvailable={checkItemAvailable}
         />
-        <a className="button add-product-button">Add A Product</a>
-        <AddForm handleNewProduct={handleNewProduct} />
+        <AddForm onNewProduct={onNewProduct} />
       </main>
     </div>
   );

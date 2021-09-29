@@ -12,8 +12,8 @@ const Products = (props) => {
             title={product.title}
             quantity={product.quantity}
             price={product.price}
-            handleUpdate={props.handleUpdate}
-            handleDelete={props.handleDelete}
+            onUpdateProduct={props.onUpdateProduct}
+            onDeleteProduct={props.onDeleteProduct}
             onCartAdd={props.onCartAdd}
             checkItemAvailable={props.checkItemAvailable}
           />
