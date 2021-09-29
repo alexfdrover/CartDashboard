@@ -107,6 +107,12 @@ h3 {
   cursor: auto;
 }
 
+.disabled {
+  background: #ccc;
+  color: #fff;
+  cursor: auto;
+}
+
 .button.checkout {
   margin-top: 20px;
   float: right;

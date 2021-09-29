@@ -7,13 +7,22 @@ import AddForm from "./components/AddForm.js";
 
 const App = () => {
   const [products, setProducts] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get("/api/products");
       const data = response.data;
       setProducts(data);
-      console.log(data);
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get("/api/cart");
+      const data = response.data;
+      setCartItems(data);
     };
     fetchData();
   }, []);
@@ -55,12 +64,72 @@ const App = () => {
     }
   };
 
+  const handleDelete = async (e, productId) => {
+    e.preventDefault();
+    try {
+      const response = await axios.delete(`/api/products/${productId}`);
+      setProducts(
+        products.filter((product) => {
+          if (product._id !== productId) {
+            return product;
+          }
+        })
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const onCartAdd = async (e, id, title, price) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("/api/cart", {
+        productId: id,
+        title,
+        price,
+      });
+      const item = response.data;
+      const itemExist = cartItems.find((cartItem) => {
+        return cartItem.productId === id;
+      });
+      if (!itemExist) {
+        setCartItems(cartItems.concat(item));
+      } else {
+        setCartItems(
+          cartItems.map((cartItem) => {
+            if (cartItem.productId !== id) {
+              return cartItem;
+            } else {
+              return item;
+            }
+          })
+        );
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const checkItemAvailable = (id) => {
+    const productQuantity = products.find((item) => item._id === id).quantity;
+    const cartItem = cartItems.find((item) => item.productId === id);
+    const cartQuantity = cartItem ? cartItem.quantity : 0;
+
+    return productQuantity > cartQuantity;
+  };
+
   return (
     <div id="app">
-      <Header />
+      <Header cartItems={cartItems} />
 
       <main>
-        <Products products={products} handleUpdate={handleUpdate} />
+        <Products
+          products={products}
+          handleUpdate={handleUpdate}
+          handleDelete={handleDelete}
+          onCartAdd={onCartAdd}
+          checkItemAvailable={checkItemAvailable}
+        />
         <a className="button add-product-button">Add A Product</a>
         <AddForm handleNewProduct={handleNewProduct} />
       </main>

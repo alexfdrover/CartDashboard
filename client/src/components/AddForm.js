@@ -25,7 +25,7 @@ const AddForm = ({ handleNewProduct }) => {
       <h3>Add Product</h3>
       <form>
         <div className="input-group">
-          <label for="product-name">Product Name</label>
+          <label htmlFor="product-name">Product Name</label>
           <input
             type="text"
             id="product-name"
@@ -35,7 +35,7 @@ const AddForm = ({ handleNewProduct }) => {
         </div>
 
         <div className="input-group">
-          <label for="product-price">Price</label>
+          <label htmlFor="product-price">Price</label>
           <input
             type="text"
             id="product-price"
@@ -45,7 +45,7 @@ const AddForm = ({ handleNewProduct }) => {
         </div>
 
         <div className="input-group">
-          <label for="product-quantity">Quantity</label>
+          <label htmlFor="product-quantity">Quantity</label>
           <input
             type="text"
             id="product-quantity"

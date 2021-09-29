@@ -22,7 +22,7 @@ const EditForm = ({ id, title, quantity, price, handleUpdate }) => {
       <h3>Edit Product</h3>
       <form>
         <div className="input-group">
-          <label for="product-name">Product Name</label>
+          <label htmlFor="product-name">Product Name</label>
           <input
             onChange={handleTitleChange}
             type="text"
@@ -32,7 +32,7 @@ const EditForm = ({ id, title, quantity, price, handleUpdate }) => {
         </div>
 
         <div className="input-group">
-          <label for="product-price">Price</label>
+          <label htmlFor="product-price">Price</label>
           <input
             onChange={handlePriceChange}
             type="text"
@@ -42,7 +42,7 @@ const EditForm = ({ id, title, quantity, price, handleUpdate }) => {
         </div>
 
         <div className="input-group">
-          <label for="product-quantity">Quantity</label>
+          <label htmlFor="product-quantity">Quantity</label>
           <input
             onChange={handleQuantityChange}
             type="text"
