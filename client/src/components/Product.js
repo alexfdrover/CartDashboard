@@ -1,4 +1,5 @@
 import EditForm from "./EditForm";
+import { useState } from "react";
 
 const Product = ({
   id,
@@ -10,6 +11,13 @@ const Product = ({
   onCartAdd,
   checkItemAvailable,
 }) => {
+  const [editVisibleForm, setEditVisibleForm] = useState(false);
+
+  const onEditVisibleForm = (e) => {
+    e.preventDefault();
+    setEditVisibleForm(!editVisibleForm);
+  };
+
   return (
     <div className="product" key={id}>
       <div className="product-details">
@@ -28,17 +36,30 @@ const Product = ({
           >
             Add to Cart
           </a>
-          <a href="/#" className="button edit">
-            Edit
-          </a>
+          {!editVisibleForm ? (
+            <a
+              href="/#"
+              onClick={(e) => onEditVisibleForm(e)}
+              className="button edit"
+            >
+              Edit
+            </a>
+          ) : (
+            ""
+          )}
         </div>
-        <EditForm
-          id={id}
-          title={title}
-          price={price}
-          quantity={quantity}
-          onUpdateProduct={onUpdateProduct}
-        />
+        {editVisibleForm ? (
+          <EditForm
+            id={id}
+            title={title}
+            price={price}
+            quantity={quantity}
+            onUpdateProduct={onUpdateProduct}
+            onCancelEditForm={onEditVisibleForm}
+          />
+        ) : (
+          ""
+        )}
         <a
           href="/#"
           className="delete-button"

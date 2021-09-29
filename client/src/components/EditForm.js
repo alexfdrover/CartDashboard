@@ -1,6 +1,13 @@
 import { useState } from "react";
 
-const EditForm = ({ id, title, quantity, price, onUpdateProduct }) => {
+const EditForm = ({
+  id,
+  title,
+  quantity,
+  price,
+  onUpdateProduct,
+  onCancelEditForm,
+}) => {
   const [newTitle, setNewTitle] = useState(title);
   const [newPrice, setNewPrice] = useState(price);
   const [newQuantity, setNewQuantity] = useState(quantity);
@@ -61,7 +68,7 @@ const EditForm = ({ id, title, quantity, price, onUpdateProduct }) => {
           >
             Update
           </a>
-          <a href="/#" className="button">
+          <a href="/#" className="button" onClick={onCancelEditForm}>
             Cancel
           </a>
         </div>
