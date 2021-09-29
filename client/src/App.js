@@ -50,7 +50,7 @@ const App = () => {
     }
   };
 
-  const onNewProduct = async (e, title, price, quantity) => {
+  const onNewProduct = async (e, title, price, quantity, callback) => {
     e.preventDefault();
     try {
       const response = await axios.post(`/api/products`, {
@@ -59,6 +59,7 @@ const App = () => {
         quantity,
       });
       setProducts(products.concat(response.data));
+      callback();
     } catch (err) {
       console.log(err);
     }

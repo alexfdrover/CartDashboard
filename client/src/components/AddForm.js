@@ -18,6 +18,13 @@ const AddForm = ({ onNewProduct }) => {
     setNewQuantity(e.target.value);
   };
 
+  const resetInputs = () => {
+    setNewTitle("");
+    setNewPrice("");
+    setNewQuantity("");
+    setAddFormVisible(!addFormVisible);
+  };
+
   return addFormVisible ? (
     <div className="add-form visible">
       <h3>Add Product</h3>
@@ -56,7 +63,9 @@ const AddForm = ({ onNewProduct }) => {
           <a
             href="/#"
             className="button"
-            onClick={(e) => onNewProduct(e, newTitle, newPrice, newQuantity)}
+            onClick={(e) =>
+              onNewProduct(e, newTitle, newPrice, newQuantity, resetInputs)
+            }
           >
             Add
           </a>
