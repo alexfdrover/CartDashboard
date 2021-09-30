@@ -1,21 +1,61 @@
 import EditForm from "./EditForm";
 import { useState } from "react";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 
-const Product = ({
-  id,
-  title,
-  quantity,
-  price,
-  onUpdateProduct,
-  onDeleteProduct,
-  onCartAdd,
-  checkItemAvailable,
-}) => {
+const Product = ({ id, title, quantity, price, onUpdateProduct }) => {
   const [editVisibleForm, setEditVisibleForm] = useState(false);
+
+  const dispatch = useDispatch();
 
   const onEditVisibleForm = (e) => {
     e.preventDefault();
     setEditVisibleForm(!editVisibleForm);
+  };
+
+  const products = useSelector((state) => state.products);
+
+  const checkItemAvailable = (id) => {
+    const productQuantity = products.find((item) => item._id === id).quantity;
+
+    return productQuantity > 0;
+  };
+
+  const onDeleteProduct = async (e, id) => {
+    e.preventDefault();
+    try {
+      await axios.delete(`/api/products/${id}`);
+      dispatch({
+        type: "PRODUCT_DELETED",
+        payload: { id },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const onCartAdd = async (e, id, title, price) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("/api/cart", {
+        productId: id,
+        title,
+        price,
+      });
+      const item = response.data;
+
+      const product = products.find((product) => product._id === id);
+      await axios.put(`/api/products/${id}`, {
+        quantity: product.quantity - 1,
+      });
+
+      dispatch({
+        type: "PRODUCT_ADDED_TO_CART",
+        payload: item,
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

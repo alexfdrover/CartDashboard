@@ -1,4 +1,21 @@
-const Cart = ({ cartItems, onCheckout }) => {
+import axios from "axios";
+import { useDispatch } from "react-redux";
+
+const Cart = ({ cartItems }) => {
+  const dispatch = useDispatch();
+
+  const onCheckout = async () => {
+    try {
+      await axios.post("/api/cart/checkout");
+      dispatch({
+        type: "CART_CHECKOUT",
+        payload: {},
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const totalCost = () => {
     let total = 0;
     cartItems.forEach((item) => {
