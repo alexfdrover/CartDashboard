@@ -1,9 +1,11 @@
 import EditForm from "./EditForm";
 import { useState } from "react";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
+import { deleteProduct } from "../actions/deleteProduct";
+import { addProductToCart } from "../actions/addProductToCart";
+import { updateProduct } from "../actions/updateProduct";
 
-const Product = ({ id, title, quantity, price, onUpdateProduct }) => {
+const Product = ({ id, title, quantity, price }) => {
   const [editVisibleForm, setEditVisibleForm] = useState(false);
 
   const dispatch = useDispatch();
@@ -23,39 +25,17 @@ const Product = ({ id, title, quantity, price, onUpdateProduct }) => {
 
   const onDeleteProduct = async (e, id) => {
     e.preventDefault();
-    try {
-      await axios.delete(`/api/products/${id}`);
-      dispatch({
-        type: "PRODUCT_DELETED",
-        payload: { id },
-      });
-    } catch (err) {
-      console.log(err);
-    }
+    dispatch(deleteProduct(id));
   };
 
   const onCartAdd = async (e, id, title, price) => {
     e.preventDefault();
-    try {
-      const response = await axios.post("/api/cart", {
-        productId: id,
-        title,
-        price,
-      });
-      const item = response.data;
+    dispatch(addProductToCart(id, title, price, products));
+  };
 
-      const product = products.find((product) => product._id === id);
-      await axios.put(`/api/products/${id}`, {
-        quantity: product.quantity - 1,
-      });
-
-      dispatch({
-        type: "PRODUCT_ADDED_TO_CART",
-        payload: item,
-      });
-    } catch (err) {
-      console.log(err);
-    }
+  const onUpdateProduct = async (e, id, title, price, quantity) => {
+    e.preventDefault();
+    dispatch(updateProduct(id, title, price, quantity, setEditVisibleForm));
   };
 
   return (

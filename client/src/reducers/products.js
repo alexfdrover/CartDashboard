@@ -4,27 +4,16 @@ const products = (state = [], action) => {
       return action.payload.products;
     }
     case "PRODUCT_CREATED": {
-      // create a new product object
-      // action {
-      //   type: "PRODUCT_ADDED",
-      //   payload: {
-      //      newProduct: product from backend
-      //   }
-      // }
-      // add new product object to state via concat
+      return state.concat(action.payload);
     }
     case "PRODUCT_EDITED": {
-      /*
-        get the editedProduct from back end
-        // action {
-        //   type: "PRODUCT_EDITED",
-        //   payload: {
-        //      editedProduct
-        //   }
-        // }
-        // update the state
-        // state.map(pro => ) // if product._id === editedProduct._id return editedProduct, if not, return product
-      */
+      return state.map((product) => {
+        if (product._id === action.payload._id) {
+          return action.payload;
+        } else {
+          return product;
+        }
+      });
     }
     case "PRODUCT_DELETED": {
       return state.filter((product) =>

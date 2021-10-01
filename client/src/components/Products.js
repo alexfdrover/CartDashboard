@@ -1,6 +1,7 @@
 import Product from "./Product.js";
 import { useEffect } from "react";
-import axios from "axios";
+import { getAllProducts } from "../actions/getAllProducts.js";
+// import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 
 const Products = (props) => {
@@ -9,17 +10,7 @@ const Products = (props) => {
   const products = useSelector((state) => state.products);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await axios.get("/api/products");
-      const data = response.data;
-      dispatch({
-        type: "GET_ALL_PRODUCTS",
-        payload: {
-          products: data,
-        },
-      });
-    };
-    fetchData();
+    dispatch(getAllProducts());
   }, [dispatch]);
 
   return (

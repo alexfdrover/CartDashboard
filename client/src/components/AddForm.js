@@ -1,10 +1,16 @@
 import { useState } from "react";
+import axios from "axios";
+import { useSelector, useDispatch } from "react-redux";
+import { createNewProduct } from "../actions/createNewProduct";
 
-const AddForm = ({ onNewProduct }) => {
+const AddForm = () => {
   const [newTitle, setNewTitle] = useState("");
   const [newPrice, setNewPrice] = useState("");
   const [newQuantity, setNewQuantity] = useState("");
   const [addFormVisible, setAddFormVisible] = useState(false);
+
+  const products = useSelector((state) => state.products);
+  const dispatch = useDispatch();
 
   const handleTitleChange = (e) => {
     setNewTitle(e.target.value);
@@ -28,6 +34,11 @@ const AddForm = ({ onNewProduct }) => {
   const onFormVisible = (e) => {
     e.preventDefault();
     setAddFormVisible(!addFormVisible);
+  };
+
+  const onNewProduct = async (e, title, price, quantity, callback) => {
+    e.preventDefault();
+    dispatch(createNewProduct(title, price, quantity, callback));
   };
 
   return addFormVisible ? (
