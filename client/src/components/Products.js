@@ -1,7 +1,6 @@
 import Product from "./Product.js";
 import { useEffect } from "react";
 import { getAllProducts } from "../actions/getAllProducts.js";
-// import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 
 const Products = (props) => {

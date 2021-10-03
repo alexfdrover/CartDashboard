@@ -1,4 +1,5 @@
 import axios from "axios";
+const baseUrl = process.env.REACT_APP_BACKEND_URL || '/api'
 
 export const updateProduct = (
   id,
@@ -9,7 +10,7 @@ export const updateProduct = (
 ) => {
   return async (dispatch) => {
     try {
-      const response = await axios.put(`/api/products/${id}`, {
+      const response = await axios.put(baseUrl + `/products/${id}`, {
         _id: id,
         title,
         price,

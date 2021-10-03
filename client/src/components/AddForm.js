@@ -1,6 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { createNewProduct } from "../actions/createNewProduct";
 
 const AddForm = () => {
@@ -9,7 +8,6 @@ const AddForm = () => {
   const [newQuantity, setNewQuantity] = useState("");
   const [addFormVisible, setAddFormVisible] = useState(false);
 
-  const products = useSelector((state) => state.products);
   const dispatch = useDispatch();
 
   const handleTitleChange = (e) => {

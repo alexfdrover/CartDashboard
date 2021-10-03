@@ -2,7 +2,6 @@ import Cart from "./Cart";
 
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import axios from "axios";
 import { getAllCartItems } from "../actions/getAllCartItems";
 
 const Header = () => {
@@ -10,17 +9,6 @@ const Header = () => {
   const cartItems = useSelector((state) => state.cartItems);
 
   useEffect(() => {
-    // const fetchData = async () => {
-    //   const response = await axios.get("/api/cart");
-    //   const data = response.data;
-    //   dispatch({
-    //     type: "GET_ALL_CART_ITEMS",
-    //     payload: {
-    //       cartItems: data,
-    //     },
-    //   });
-    // };
-    // fetchData();
     dispatch(getAllCartItems());
   }, [dispatch]);
 

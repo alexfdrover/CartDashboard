@@ -1,9 +1,10 @@
 import axios from "axios";
+const baseUrl = process.env.REACT_APP_BACKEND_URL || '/api'
 
 export const addProductToCart = (id, title, price, products) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post("/api/cart", {
+      const response = await axios.post(baseUrl + "/cart", {
         productId: id,
         title,
         price,
@@ -11,7 +12,7 @@ export const addProductToCart = (id, title, price, products) => {
       const item = response.data;
 
       const product = products.find((product) => product._id === id);
-      await axios.put(`/api/products/${id}`, {
+      await axios.put(baseUrl + `/products/${id}`, {
         quantity: product.quantity - 1,
       });
 
